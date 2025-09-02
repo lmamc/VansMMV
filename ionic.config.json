@@ -1,0 +1,7 @@
+{
+  "name": "vansApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
