@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ concierto ? concierto.banda.nombre : 'Detalles' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- cargandoo -->
+  <div *ngIf="!concierto" class="ion-text-center">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <!-- mapeo general de la wea -->
+  <div *ngIf="concierto">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ concierto.banda.nombre }}</ion-card-title>
+        <ion-card-subtitle>{{ concierto.direccion }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          <strong>Fecha:</strong> {{ concierto.fecha | date: 'dd/MM/yyyy HH:mm'
+          }}
+        </p>
+        <p><strong>Género:</strong> {{ concierto.banda.genero }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-list-header>
+      <h2>Viajes Disponibles</h2>
+    </ion-list-header>
+
+    <!-- Si no hay viajes mensaje -->
+    <div *ngIf="concierto.viajes.length === 0" class="ion-padding">
+      <p>No hay viajes disponibles para este concierto por el momento.</p>
+    </div>
+
+    <!--viajes disponibles -->
+    <ion-card *ngFor="let viaje of concierto.viajes">
+      <ion-card-header>
+        <ion-card-title>Empresa: {{ viaje.empresa }}</ion-card-title>
+        <ion-card-subtitle>Viaje desde {{ viaje.origen }}</ion-card-subtitle>
+        <ion-card-subtitle>Fecha de Salida: {{ viaje.fechaSalida }}</ion-card-subtitle>
+        <ion-card-subtitle>Fecha de Llegada: {{ viaje.fechaLlegada }}</ion-card-subtitle>
+        <ion-card-subtitle>Vehículo: {{ viaje.vehiculo?.patente }}</ion-card-subtitle>
+        <ion-card-subtitle>Tipo de Vehículo: {{ viaje.vehiculo?.tipo }}</ion-card-subtitle>
+
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Destino:</strong> {{ viaje.destino }}</p>
+        <p><strong>Precio:</strong> {{ viaje.precio | currency:'CLP' }}</p>
+        <p><strong>Estado:</strong> {{ viaje.estado }}</p>
+        <p>
+          <strong>Asientos Disponibles:</strong> {{ viaje.asientos_disponibles
+          }}
+        </p>
+        <ion-button (click)="irASeleccionAsiento(viaje.viaje_id)">
+          Seleccionar Asiento
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Selecciona tu asiento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="asientos-container">
+    <div
+      *ngFor="let asiento of asientos"
+      [ngStyle]="{
+         'background-color': asiento.seleccionado ? 'green' : (asiento.estado === 'ocupado' ? 'red' : 'white'),
+         'color': 'black',
+         'border': '1px solid #ccc',
+         'margin': '5px',
+         'width': '40px',
+         'height': '40px',
+         'display': 'inline-flex',
+         'align-items': 'center',
+         'justify-content': 'center',
+         'cursor': asiento.estado === 'disponible' ? 'pointer' : 'not-allowed'
+       }"
+      (click)="seleccionarAsiento(asiento)"
+    >
+      {{ asiento.numero || asiento.id }}
+    </div>
+  </div>
+  <button (click)="reservarAsiento()" [disabled]="!asientoSeleccionado">
+    RESERVAR ASIENTO
+  </button>
+  <ion-button
+    expand="block"
+    color="primary"
+    (click)="reservarAsiento()"
+    [disabled]="!asientoSeleccionado"
+  >
+    Reservar Asiento
+  </ion-button>
+</ion-content>

@@ -1,20 +1,41 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Próximos Conciertos
     </ion-title>
+    <ion-buttons slot="end" *ngIf="isLoggedIn()">
+      <ion-button color="danger" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Próximos Conciertos</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-list>
+    <!-- Mensaje si no hay conciertos -->
+    <ion-item *ngIf="conciertos.length === 0">
+      <ion-label>No hay conciertos disponibles en este momento.</ion-label>
+    </ion-item>
+
+    <!-- Iteramos sobre la lista de conciertos -->
+    <ion-card *ngFor="let concierto of conciertos" [routerLink]="['/detalles', concierto.concierto_id]">
+      <ion-card-header>
+        <ion-card-title>{{ concierto.banda.nombre }}</ion-card-title>
+        <ion-card-subtitle>{{ concierto.direccion }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Fecha: {{ concierto.fecha | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p>Género: {{ concierto.banda.genero }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
 </ion-content>
