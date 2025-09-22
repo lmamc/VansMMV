@@ -30,8 +30,8 @@ export class DetallesPage implements OnInit {
         next: (data) => {
           this.concierto = data;
           console.log('Detalles del concierto:', this.concierto);
-          console.log('Viajes:', this.concierto.viajes); // <-- Aquí
-          this.cdr.detectChanges(); // 3. Forzar la detección de cambios
+          console.log('Viajes:', this.concierto.viajes); 
+          this.cdr.detectChanges(); 
         },
         error: (err) => {
           console.error('Error al cargar los detalles del concierto:', err);
